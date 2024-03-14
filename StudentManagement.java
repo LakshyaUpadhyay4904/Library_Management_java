@@ -11,11 +11,13 @@ public class StudentManagement extends JFrame implements ActionListener {
 
   public StudentManagement() {
     super("Student List");
-    setSize(800, 400);
+    setSize(1200, 700);
+    //jframe should start at center of the screen
+    setLocationRelativeTo(null);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     // Define table model
-    tableModel = new DefaultTableModel(new String[]{"Name", "Roll No", "Class", "Div", "Age"}, 0);
+    tableModel = new DefaultTableModel(new String[]{"Name", "EnRollment No", "Course", "Section"}, 0);
     studentTable = new JTable(tableModel);
 
     // Add buttons
@@ -43,61 +45,25 @@ public class StudentManagement extends JFrame implements ActionListener {
     // Implement button actions (replace with your actual logic)
   }
 
+  // function to show the student list in tablemodel
+  public void showStudentList() {
+    // Clear the table model
+    tableModel.setRowCount(0);
+
+    // Add students to the table model
+    for (Student student : Student.StudentList) {
+      tableModel.addRow(new Object[]{student.Name, student.EnrollNo, student.Course, student.Section});
+    }
+  }
+
+
   @Override
   public void actionPerformed(ActionEvent e) {
     if (e.getSource() == addButton) {
-      // Open dialog to add new student
-      JTextField nameField = new JTextField(20);
-      JTextField rollNoField = new JTextField(10);
-      JTextField classField = new JTextField(5);
-      JTextField divField = new JTextField(5);
-      JTextField ageField = new JTextField(3);
-
-      JPanel addPanel = new JPanel(new GridBagLayout());
-      GridBagConstraints c = new GridBagConstraints();
-
-      JLabel nameLabel = new JLabel("Name:");
-      c.fill = GridBagConstraints.HORIZONTAL;
-      c.gridx = 0;
-      c.gridy = 0;
-      addPanel.add(nameLabel, c);
-      addPanel.add(nameField, c);
-
-      JLabel rollNoLabel = new JLabel("Roll No:");
-      c.gridx = 0;
-      c.gridy = 1;
-      addPanel.add(rollNoLabel, c);
-      addPanel.add(rollNoField, c);
-
-      JLabel classLabel = new JLabel("Class:");
-      c.gridx = 0;
-      c.gridy = 2;
-      addPanel.add(classLabel, c);
-      addPanel.add(classField, c);
-
-      JLabel divLabel = new JLabel("Div:");
-      c.gridx = 0;
-      c.gridy = 3;
-      addPanel.add(divLabel, c);
-      addPanel.add(divField, c);
-
-      JLabel ageLabel = new JLabel("Age:");
-      c.gridx = 0;
-      c.gridy = 4;
-      addPanel.add(ageLabel, c);
-      addPanel.add(ageField, c);
-
-      int result = JOptionPane.showConfirmDialog(null, addPanel, "Add Student", JOptionPane.OK_CANCEL_OPTION);
-
-      if (result == JOptionPane.OK_OPTION) {
-        String name = nameField.getText();
-        String rollNo = rollNoField.getText();
-        String studentClass = classField.getText();
-        String div = divField.getText();
-        int age = Integer.parseInt(ageField.getText());
-
-        // Add new student data to table model
-        tableModel.addRow(new Object[]{name, rollNo, studentClass, div, age});
+      StudentWindow studentWindow = new StudentWindow();
+      int result = studentWindow.ShowDialogBox();
+      if (result == 1) {
+        showStudentList();
       }
     } else if (e.getSource() == editButton) {
       // Get the selected student from the table

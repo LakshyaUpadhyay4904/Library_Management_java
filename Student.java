@@ -6,9 +6,9 @@ public class Student {
     public int Id;
     public String Name;
     public String Course;
-    public char Section;
+    public String Section;
     public String EnrollNo;
-    public int IssuedBook;
+    public String IssuedBook;
     public String IFSCCode;
     public LocalDate IssuedDate;
     public static ArrayList<Student> StudentList = new ArrayList<Student>();
@@ -18,7 +18,7 @@ public class Student {
     public Student(){
     }
 
-    public void addStudent(int id, String name, String course, char section, String enrollNo, int issuedBook,String iFSCCode, LocalDate issuedDate) {
+    public void addStudent(int id, String name, String course, String section, String enrollNo, String issuedBook,String iFSCCode, LocalDate issuedDate) {
         this.Id = id;
         this.Name = name;
         this.Course = course;
